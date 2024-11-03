@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Objects;
+
 @Entity
 public class ToDo {
     @Id
@@ -45,4 +47,16 @@ public class ToDo {
         return description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToDo todo = (ToDo) o;
+        return Objects.equals(title, todo.title) && Objects.equals(description, todo.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description);
+    }
 }

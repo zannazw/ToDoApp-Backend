@@ -12,35 +12,35 @@ import java.util.Optional;
 public class ToDoService {
 
     @Autowired
-    private ToDoRepository toDoRepository;
+    private ToDoRepository todoRepository;
 
     public ToDo createToDo(ToDo toDo) {
-        return toDoRepository.save(toDo);
+        return todoRepository.save(toDo);
     }
 
     public List<ToDo> getAllToDos() {
-        return toDoRepository.findAll();
+        return todoRepository.findAll();
     }
 
     public Optional<ToDo> getToDoById(int id) {
-        return toDoRepository.findById(id);
+        return todoRepository.findById(id);
     }
 
     public Optional<ToDo> getToDoByTitle(String title) {
-        return toDoRepository.findByTitle(title);
+        return todoRepository.findByTitle(title);
     }
 
     public Optional<ToDo> updateToDoById(int id, ToDo newToDo) {
-        return toDoRepository.findById(id)
+        return todoRepository.findById(id)
                 .map(oldToDo -> {
                     oldToDo.setTitle(newToDo.getTitle());
                     oldToDo.setDescription(newToDo.getDescription());
-                    return toDoRepository.save(oldToDo);
+                    return todoRepository.save(oldToDo);
                 });
     }
 
     public void deleteToDoById(int id) {
-        toDoRepository.deleteById(id);
+        todoRepository.deleteById(id);
     }
 
 }

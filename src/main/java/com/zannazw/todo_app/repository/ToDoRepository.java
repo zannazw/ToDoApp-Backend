@@ -9,20 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ToDoRepository extends JpaRepository<ToDo, Integer> {
 
-    //Create & Update
-    //void save(ToDo todo);
-
-    //Read
-    //List<ToDo> findAll();
-
-    //Optional<ToDo> findById(int id);
-
     Optional<ToDo> findByTitle(String title);
-
-    //Delete
-    //void deleteById(int id);
-
-    void deleteByTitle(String title);
-
 
 }

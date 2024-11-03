@@ -7,18 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ToDoTest {
 
-    private ToDo toDo;
+    private ToDo todo;
 
     @BeforeEach
     void setUp() {
-        toDo = new ToDo("Putzen", "Badezimmer");
+        todo = new ToDo("Putzen", "Badezimmer");
     }
 
     @Test
     void setId() {
         int expectedResult = 2;
-        toDo.setId(expectedResult);
-        int actualResult = toDo.getId();
+        todo.setId(expectedResult);
+        int actualResult = todo.getId();
         assertEquals(expectedResult, actualResult);
     }
 
@@ -26,11 +26,11 @@ class ToDoTest {
     void setTitle() {
         //given
         String expectedResult = "Reinigen";
-        toDo.setTitle(expectedResult);
+        todo.setTitle(expectedResult);
         String actualResult;
 
         //when
-        actualResult = toDo.getTitle();
+        actualResult = todo.getTitle();
 
         //then
         assertEquals(expectedResult, actualResult);
@@ -39,8 +39,8 @@ class ToDoTest {
     @Test
     void setDescription() {
         String expectedResult = "Pfannen";
-        toDo.setDescription(expectedResult);
-        String actualResult = toDo.getDescription();
+        todo.setDescription(expectedResult);
+        String actualResult = todo.getDescription();
         assertEquals(expectedResult, actualResult);
     }
 
@@ -58,7 +58,7 @@ class ToDoTest {
         String actualResult;
 
         //when
-        actualResult = toDo.getTitle();
+        actualResult = todo.getTitle();
 
         //then
         assertEquals(expectedResult, actualResult);
@@ -67,7 +67,7 @@ class ToDoTest {
     @Test
     void getDescription() {
         String expectedResult = "Badezimmer";
-        String actualResult = toDo.getDescription();
+        String actualResult = todo.getDescription();
         assertEquals(expectedResult, actualResult);
     }
 }
