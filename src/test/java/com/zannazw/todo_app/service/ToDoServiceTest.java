@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
@@ -43,12 +46,20 @@ class ToDoServiceTest {
 
     @Test
     void getAllToDos() {
+        List<ToDo> expectedResult = new ArrayList<>();
+        ToDo todo1 = new ToDo("Staubsaugen", "Schlafzimmer");
+        ToDo todo2 = new ToDo("Einkaufen", "Gurke");
+        expectedResult.add(todo1);
+        expectedResult.add(todo2);
 
+        when(todoRepository.findAll()).thenReturn(expectedResult);
+        List<ToDo> actualResult = todoService.getAllToDos();
+
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
     void getToDoById() {
-
     }
 
     @Test
