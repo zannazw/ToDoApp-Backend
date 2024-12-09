@@ -3,10 +3,11 @@ package com.zannazw.todo_app.controller;
 import com.zannazw.todo_app.entity.ToDo;
 import com.zannazw.todo_app.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo")
@@ -15,36 +16,44 @@ public class ToDoController {
     @Autowired
     ToDoService todoService;
 
-    public ToDoController(ToDoService todoService) {
-        this.todoService = todoService;
-    }
-
     @GetMapping
-    public List<ToDo> getAllToDos() {
-        return todoService.getAllToDos();
+    public ResponseEntity<List<ToDo>> getAllToDos() {
+        List<ToDo> todos = todoService.getAllToDos();
+        if (todos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(todos);
     }
 
     @GetMapping("/{title}")
-    public ToDo getToDo(@PathVariable String title) {
-        ToDo todo = todoService.getToDoByTitle(title)
-                .orElseThrow(() -> new NoSuchElementException(String.format("No Todo found with title: %s", title)));
-        return todo;
+    public ResponseEntity<ToDo> getToDo(@PathVariable String title) {
+        Optional<ToDo> todo = todoService.getToDoByTitle(title);
+        if (todo.isPresent()) {
+            return ResponseEntity.ok(todo.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/create")
-    public ToDo newToDo(@RequestBody ToDo todo) {
-        return todoService.createToDo(todo);
+    public ResponseEntity<ToDo> newToDo(@RequestBody ToDo todo) {
+        ToDo createdTodo = todoService.createToDo(todo);
+        return ResponseEntity.ok(createdTodo);
     }
 
     @PutMapping("/edit/{id}")
-    public ToDo updateToDo(@PathVariable int id, @RequestBody ToDo todo) {
-        ToDo toDo = todoService.updateToDoById(id, todo)
-                .orElseThrow(() -> new NoSuchElementException(String.format("No Todo found with id: %s", id)));
-        return todo;
+    public ResponseEntity<ToDo> updateToDo(@PathVariable int id, @RequestBody ToDo todo) {
+        Optional<ToDo> updatedTodo = todoService.updateToDoById(id, todo);
+        if (updatedTodo.isPresent()) {
+            return ResponseEntity.ok(updatedTodo.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteToDo(@PathVariable int id) {
+    public ResponseEntity<Void> deleteToDo(@PathVariable int id) {
         todoService.deleteToDoById(id);
+        return ResponseEntity.noContent().build();
     }
 }

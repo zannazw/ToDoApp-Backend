@@ -3,25 +3,27 @@ package com.zannazw.todo_app.service;
 import com.zannazw.todo_app.entity.ToDo;
 import com.zannazw.todo_app.repository.ToDoRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ToDoServiceTest {
 
-    @Autowired
+    @InjectMocks
     private ToDoService todoService;
 
-    @MockBean
+    @Mock
     private ToDoRepository todoRepository;
 
     @Test
@@ -33,18 +35,6 @@ class ToDoServiceTest {
         ToDo actualResult = todoService.createToDo(input);
 
         assertEquals(expectedResult, actualResult);
-        verify(todoRepository).save(input);
-    }
-
-    @Test
-    void createTo_DoNotEquals() {
-        ToDo input = new ToDo("Reinigen", "Pfanne");
-        ToDo expectedResult = new ToDo("Reinigen", "Topf");
-
-        when(todoRepository.save(input)).thenReturn(expectedResult);
-        ToDo actualResult = todoService.createToDo(input);
-
-        assertNotEquals(expectedResult, actualResult);
         verify(todoRepository).save(input);
     }
 

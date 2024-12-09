@@ -15,16 +15,9 @@ public class ToDo {
     private String title;
     private String description;
 
-    public ToDo() {
-    }
-
     public ToDo(String title, String description) {
         this.title = title;
         this.description = description;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setTitle(String title) {
