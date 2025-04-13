@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/todo")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ToDoController {
 
     @Autowired
@@ -51,7 +52,7 @@ public class ToDoController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteToDo(@PathVariable int id) {
         todoService.deleteToDoById(id);
         return ResponseEntity.noContent().build();
